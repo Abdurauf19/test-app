@@ -6,9 +6,10 @@ $container: 1196;
 	padding: 0 15px;
 }  
 
-.error {
-  border:1px solid red;
-}
+.error-prefix .el-input__wrapper {
+	border-color: #f5222d !important;
+	border: 1px solid red !important;
+  }
 
 
 .el-input__inner {
@@ -52,8 +53,16 @@ $container: 1196;
 .el-input__wrapper {
     background-color: #f0f4fa;
     padding: 0 !important;
-    border-radius: 6px;
+    border-radius: 4px;
     box-shadow: none !important;
+  }
+
+  i {
+	svg {
+		rect {
+			fill:#becad7
+		}
+	}
   }
 
 

@@ -2,13 +2,13 @@
   <i v-if="src" class="icon" v-html="src" />
 </template>
 <script>
-import icons from '~/assets/helpers/icons.js'
+import icons from '../assets/helpers/icon'
 export default {
   props: {
     name: { type: String, default: '' },
     color: {
       type: String,
-      default: '',
+      default: '#4C6FFF',
     },
   },
   computed: {
