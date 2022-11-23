@@ -1,0 +1,59 @@
+$container: 1196;
+.container {
+	inset: 0;
+	max-width: $container + 30 + px;
+	margin: 0px auto;
+	padding: 0 15px;
+}  
+
+.error {
+  border:1px solid red;
+}
+
+
+.el-input__inner {
+	font-weight: 600;
+	outline: none !important;
+	font-size: 14px;
+	line-height: 130%;
+	color: #05101d;
+	border-radius: 6px !important;
+	box-shadow: none;
+	border: 1px solid transparent;
+	transition: 0.2s ease;
+	height: auto;
+	padding-top: 11px;
+	padding-bottom: 11px;
+
+	&::placeholder {
+	  font-weight: 600;
+	  font-size: 14px;
+	  line-height: 130%;
+	  color: #becad7;
+	}
+
+	&:hover {
+	  box-shadow: none;
+	}
+  }
+
+  .el-input__suffix-inner {
+	svg path {
+	  transition: all 0.2s ease-in;
+	}
+
+	&:hover svg path {
+	  fill: #1a73eb;
+	}
+  }
+
+
+
+.el-input__wrapper {
+    background-color: #f0f4fa;
+    padding: 0 !important;
+    border-radius: 6px;
+    box-shadow: none !important;
+  }
+
+
