@@ -1,7 +1,7 @@
 <template>
     <div class="container mt-10">
       <div>
-        <CTable v-if="getStudents" @id="editStudent(id)" :data="getStudents"  @edit="editStudent(item)" @delete="''"  />
+        <CTable v-if="getStudents"  :data="getStudents"  @edit="editStudent" @delete="''"  />
        <div v-else class="flex items-center justify-center h-screen " >
         <CNodata text="add students" @add="dialogVisible = true" />
        </div>
@@ -86,6 +86,7 @@ export default {
 
  data() {
     return {
+    singleId:undefined,
     dialogVisible: false,
      form: {
       userName: '',
@@ -102,6 +103,7 @@ computed: {
     getStudents() {
         return JSON.parse(window.sessionStorage.getItem("student")) || undefined;
     }
+   
 },
 
   validations() {
@@ -116,16 +118,26 @@ computed: {
 	}
 },
 
+// watch: {
+//     'singleId'(newValue,oldValue) {
+//     //  this.singleId = newValue
+//      console.log(newValue,oldValue)
+//     }
+// },
+
 mounted() {
-this.getStudents;
-console.log(this.$route.query)
-},
+this.getStudents
+ },
+
 methods: {
-editStudent(item) {
-    console.log(item)
+ findItemById(arr,id) {
+    return arr.find((el) => el.id === +id)
+},
+editStudent() {
      this.dialogVisible = true
-    //   const id = this.getStudents.map((el) => console.log(el))
-    //   console.log(id)
+    let a =  this.findItemById( this.getStudents, this.$route.query.id )
+    console.log(a)
+    //    console.log( $findItemById(this.$route.query.id, this.getStudents))
 },
  async createStudent() {
      this.v$.$validate()

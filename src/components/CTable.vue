@@ -8,9 +8,10 @@
                 <th class="text-[14px] font-semibold text-[#8492A6]">Actions</th>
             </tr>
             <tr v-for="(item,index) in data" :key="index" class="rounded-[8px]" >
-                <td>{{index}}</td>
+                <td>{{index+1}}</td>
                 <td>{{item.userName}}</td>
                 <td>{{item.userPhone}}</td>
+                {{item.id}}
                 <td><icons  class="cursor-pointer" name="dots" @click="setActive(item.id)"/>
                  <span v-if="active == item.id" class="absolute z-50 flex flex-col w-[100px] bg-[#EBF1FA] overflow-hidden border border-[#EBF1FA] cursor-pointer border-solid rounded-[8px]">
                     <span class="text-[#525763] text-[12px] font-normal p-2 transition-all duration-300 hover:bg-[#8492a68e]" @click="getId(item.id)" >edit</span>
@@ -40,7 +41,7 @@ export default {
 
   methods: {
     getId(id) {
-      this.$router.push(`students?id="${id}"`)
+      this.$router.push(`students?id=${id}`)
       this.$emit('edit')
     },
   deleted() {
