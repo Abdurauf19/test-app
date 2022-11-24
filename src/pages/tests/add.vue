@@ -37,7 +37,9 @@
             </el-input>
             </label>
 
-        <button class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px] mt-3" type="button" @click="AddTest">Add test</button>
+        <button v-if="false" class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px] mt-3" type="button" @click="AddTest">Add test</button>
+        <button v-if="true" class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px] mt-3" type="button" @click="editTest">Edit test</button>
+            <pre>{{getSingleTest}}</pre>
 
         </div>
         </div>
@@ -66,40 +68,65 @@ export default {
 	return {
         form: {
             question: {required},
-            correct: {required}
+            // correct: {required}
         }
 	}
 },
 
-methods: {
-    handleFocus(index) {
-  if (index == this.form.answers.length - 1 && this.form.answers.length < 3) {
-    this.form.answers.push("");
-  }
-},
 
-   async AddTest () {
-     this.v$.$validate()
-     if(!this.v$.$error) {
-    for (const index in this.form.answers) {
-      if (!this.form.answers[index]) {
-        this.form.answers.splice(index, 1);
-      }
+  
+ computed: {
+    getTest() {
+        return JSON.parse(window.sessionStorage.getItem("test")) || undefined;
+    },
+    getSingleTest() {
+        return this.findItemById( this.getTest, this.$route.params.id )
     }
+   },
 
-    const allTest = [];
-    const parsedTests =
-      JSON.parse(window.sessionStorage.getItem("test")) || undefined;
-        if (parsedTests) {
-       allTest.push(...parsedTests);
-    }
+   mounted() {
+    this.form.question = this.getSingleTest.title
+    console.log(this.$route.params.id)
+ },
 
-     allTest.push(this.form);
-    await window.sessionStorage.setItem("test", JSON.stringify(allTest));
-   }
+    methods: {
+ handleFocus(index) {
+        if (index == this.form.answers.length - 1 && this.form.answers.length < 3) {
+            this.form.answers.push("");
+        }
+    },
+
+     findItemById(arr,id) {
+            return arr.find((el) => el.id === +id)
+        },
+
+     async AddTest () {
+            this.v$.$validate()
+            console.log(this.v$.$error)
+            if(this.v$.$error) {
+            for (const index in this.form.answers) {
+            if (!this.form.answers[index]) {
+                this.form.answers.splice(index, 1);
+            }
+            }
+
+            const allTest = [];
+            const parsedTests =
+            JSON.parse(window.sessionStorage.getItem("test")) || undefined;
+                if (parsedTests) {
+            allTest.push(...parsedTests);
+            }
+
+            allTest.push(this.form);
+            await window.sessionStorage.setItem("test", JSON.stringify(allTest));
+            this.$router.push('/')
+        }
+     },
+
 }
 
-},
+
+
 }
 </script> 
 
@@ -123,3 +150,7 @@ methods: {
 border-radius: 16px;
 }
 </style>
+
+
+
+

@@ -20,6 +20,11 @@ export const routes = [
     component: () => import("~/pages/students/add.vue"),
   },
   {
+    path: "/tests/:id",
+    meta: {title: "tests/add",layout: 'LDefault'},
+    component: () => import("~/pages/tests/add.vue"),
+  },
+  {
     path: "/tests/add",
     meta: {title: "tests/add",layout: 'LDefault'},
     component: () => import("~/pages/tests/add.vue"),
