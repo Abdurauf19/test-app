@@ -124,7 +124,7 @@ watch: {
 },
 
 mounted() {
-this.getStudents
+    this.getStudents
  },
 
 methods: {
@@ -138,6 +138,7 @@ methods: {
       let getSt = this.getStudents.splice(a.id, 1);
      console.log(getSt)
     window.sessionStorage.setItem("student", JSON.stringify(getSt));
+    this.getStudents
   },
 
 editStudent() {
@@ -155,6 +156,7 @@ editStudent() {
     this.getStudents[index] = this.form;
     window.sessionStorage.setItem("student", JSON.stringify(this.getStudents));
      this.dialogVisible = false
+      this.getStudents
 },
  async createStudent() {
      this.v$.$validate()
@@ -167,23 +169,10 @@ editStudent() {
     }
       students.push(this.form);
     await window.sessionStorage.setItem("student", JSON.stringify(students));
+     this.getStudents();
     }
   }
 },
-
-
-
-//  editStudent() {
-//     console.log('dasdasdasdada')
-//     this.dialogVisible = true
-//     // const id = this.getStudents.map((el) => console.log(el))
-//     // console.log(id)
-//     // const index = students.value.findIndex((item) => item.id == student.id);
-//     // students.value[index] = student;
-// //    await window.sessionStorage.setItem("student", JSON.stringify(students.value));
-//     // getStudents();
-//   }
-
 }
 </script>
 
