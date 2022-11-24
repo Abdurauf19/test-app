@@ -1,12 +1,12 @@
 <template>
-    <div class="grid grid-cols-2">
+    <div class="flex gap-5">
     <CSidebar/>
         <router-view/>
     </div>
 </template>
 
 <script>
-import CSidebar from "../components/sideBar.vue"
+import CSidebar from "../components/CSideBar.vue"
 export default {
     components: { CSidebar }
 }

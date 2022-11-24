@@ -3,6 +3,7 @@ export const app = createApp(App);
 import App from './App.vue';
 import ElementPlus from 'element-plus';
 import router from './router/index';
+import Maska from "maska";
 import i18n from './plugins/i18n';
 import axios from './plugins/axios';
 import VueAxios from 'vue-axios';
@@ -22,6 +23,7 @@ app.use(router);
 app.use(i18n);
 app.use(ElementPlus);
 app.use(VueAxios, axios);
+app.use(Maska);
 app.use(store);
 app.mount('#app');
 

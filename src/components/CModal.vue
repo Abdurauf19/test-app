@@ -1,13 +1,9 @@
 <template>
-    <div class="container mt-10">
-      <div>
-        <CTable v-if="getStudents" @id="editStudent(id)" :data="getStudents"  @edit="editStudent(item)" @delete="''"  />
-       <div v-else class="flex items-center justify-center h-screen " >
-        <CNodata text="add students" @add="dialogVisible = true" />
-       </div>
-        <pre> {{getStudents}}ddd</pre>
-        
-       <el-dialog
+  <el-button text @click="dialogVisible = true">
+    click to open the Dialog
+  </el-button>
+
+  <el-dialog
     v-model="dialogVisible"
     title="Add Student"
     width="40%"
@@ -67,26 +63,23 @@
    </div>
    
   </el-dialog>
-
-      </div>
-    </div>
 </template>
 
 <script>
 import useVuelidate from '@vuelidate/core'
 import { required, minLength } from '@vuelidate/validators'
-import CTable from "../../components/CSideBar.vue"
-import CNodata from "../../components/noData.vue"
 export default {
- components: { CTable, CNodata },
+   props: {
+    dialogVisible: Boolean
+  },
+  
+  setup () {
+    return { v$: useVuelidate() }
+  },
 
-    setup () {
-        return { v$: useVuelidate() }
-    },
-
- data() {
+  data() {
     return {
-    dialogVisible: false,
+      dialogVisible: false,
      form: {
       userName: '',
       userPhone: '',
@@ -96,14 +89,7 @@ export default {
       id: Math.floor(Math.random() * 100000),
      }
     }
- },
-
-computed: {
-    getStudents() {
-        return JSON.parse(window.sessionStorage.getItem("student")) || undefined;
-    }
-},
-
+  },
   validations() {
 	return {
     form: {
@@ -116,23 +102,14 @@ computed: {
 	}
 },
 
-mounted() {
-this.getStudents;
-console.log(this.$route.query)
-},
 methods: {
-editStudent(item) {
-    console.log(item)
-     this.dialogVisible = true
-    //   const id = this.getStudents.map((el) => console.log(el))
-    //   console.log(id)
-},
  async createStudent() {
      this.v$.$validate()
     if(!this.v$.$error) {
       this.dialogVisible = false
      const students = [];
-     const haveStudents = JSON.parse(window.sessionStorage.getItem("student")) || undefined;
+     const haveStudents =
+      JSON.parse(window.sessionStorage.getItem("student")) || undefined;
      if (haveStudents) {
       students.push(...haveStudents);
     }
@@ -140,24 +117,9 @@ editStudent(item) {
     await window.sessionStorage.setItem("student", JSON.stringify(students));
     }
   }
-},
-
-
-
-//  editStudent() {
-//     console.log('dasdasdasdada')
-//     this.dialogVisible = true
-//     // const id = this.getStudents.map((el) => console.log(el))
-//     // console.log(id)
-//     // const index = students.value.findIndex((item) => item.id == student.id);
-//     // students.value[index] = student;
-// //    await window.sessionStorage.setItem("student", JSON.stringify(students.value));
-//     // getStudents();
-//   }
-
+}
 }
 </script>
-
 
 <style lang="scss">
   .el-input__inner {

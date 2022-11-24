@@ -1,5 +1,5 @@
 <template>
-	<div class="bg-white h-screen max-w-[251px] flex flex-col justify-between p-6 border border-[#EDF2F7] border-solid sidebar">
+	<div class="bg-white h-screen w-[251px] max-w-[251px] flex flex-col justify-between p-6 border border-[#EDF2F7] border-solid sidebar">
       <div class="flex flex-col gap-8">
 			<a v-for="(item,index) in links" :href="item.link" :key="index" 
 			class="flex items-center gap-5 text-[15px] text-[#425466]"

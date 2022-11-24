@@ -4,10 +4,15 @@
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    CModal: typeof import('./../components/CModal.vue')['default']
+    CSideBar: typeof import('./../components/CSideBar.vue')['default']
+    CTable: typeof import('./../components/CTable.vue')['default']
+    ElDialog: typeof import('element-plus/es')['ElDialog']
+    ElInput: typeof import('element-plus/es')['ElInput']
     Icon: typeof import('./../components/icon.vue')['default']
+    NoData: typeof import('./../components/noData.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SideBar: typeof import('./../components/sideBar.vue')['default']
   }
 }
 
