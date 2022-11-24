@@ -1,7 +1,7 @@
 <template>
     <div class="container mt-10">
       <div>
-        <CTable v-if="getStudents && getStudents.length "  :data="getStudents" @add="dialogVisible = true"  @edit="editStudent" @delete="deleteStudent"  />
+        <CTable v-if="students && students.length "  :data="students" @add="dialogVisible = true"  @edit="editStudent" @delete="deleteStudent"  />
        <div v-else class="flex items-center justify-center h-screen " >
         <CNodata text="add students" @add="dialogVisible = true" />
        </div>
@@ -88,6 +88,7 @@ export default {
     return {
         single: undefined,
     dialogVisible: false,
+    students: [],
      form: {
       userName: '',
       userPhone: '',
@@ -98,12 +99,6 @@ export default {
      }
     }
  },
-
-computed: {
-    getStudents() {
-        return JSON.parse(window.sessionStorage.getItem("student")) || undefined;
-    },
-},
 
   validations() {
 	return {
@@ -124,13 +119,25 @@ watch: {
 },
 
 mounted() {
-    this.getStudents
+    this.students = this.getStudents()
  },
 
 methods: {
+   getStudents() {
+        return JSON.parse(window.sessionStorage.getItem("student")) || undefined;
+    },
+    clearForm() {
+      for(let i in this.form) {
+        this.form[i] = '';
+        if(i == 'id') {
+          this.form[i] =  Math.floor(Math.random() * 100000)
+        }
+      }
+    },   
  findItemById(arr,id) {
     return arr.find((el) => el.id === +id)
 },
+
 
    deleteStudent() {
      const a = this.getStudents.findIndex((item) => item.id == this.$route.query.id);
@@ -138,7 +145,7 @@ methods: {
       let getSt = this.getStudents.splice(a.id, 1);
      console.log(getSt)
     window.sessionStorage.setItem("student", JSON.stringify(getSt));
-    this.getStudents
+    this.students = this.getStudents
   },
 
 editStudent() {
@@ -169,7 +176,7 @@ editStudent() {
     }
       students.push(this.form);
     await window.sessionStorage.setItem("student", JSON.stringify(students));
-     this.getStudents();
+    this.students = this.getStudents();
     }
   }
 },

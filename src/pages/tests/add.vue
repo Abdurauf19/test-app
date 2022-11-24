@@ -85,7 +85,7 @@ export default {
    },
 
    mounted() {
-    this.form.question = this.getSingleTest.title
+    this.form.question = this.getSingleTest?.title
     console.log(this.$route.params.id)
  },
 
@@ -97,7 +97,7 @@ export default {
     },
 
      findItemById(arr,id) {
-            return arr.find((el) => el.id === +id)
+            return arr?.find((el) => el.id === +id)
         },
 
      async AddTest () {

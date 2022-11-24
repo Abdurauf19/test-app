@@ -2,7 +2,6 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import path from 'path';
 import { resolve } from 'path';
-import eslintPlugin from 'vite-plugin-eslint';
 import { ViteWebfontDownload } from 'vite-plugin-webfont-dl';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import Components from 'unplugin-vue-components/vite';
@@ -11,7 +10,6 @@ import Components from 'unplugin-vue-components/vite';
 export default defineConfig({
 	plugins: [
 		vue(),
-		eslintPlugin(),
 		ViteWebfontDownload([
 			'https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap',
 			'https://fonts.googleapis.com/css2?family=Fira+Code&display=swap',
