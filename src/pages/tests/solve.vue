@@ -17,7 +17,7 @@
             </el-radio-group>
             </div>
             <div class="flex  gap-3 justify-end">
-                <button v-if="indexOfTest > 1" class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px]" @click="">prev</button>
+                <button v-if="indexOfTest > 1" class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px]" @click="back(singleTest?.id)">prev</button>
                 <button 
                  :disabled="form[singleTest?.id] == undefined"
                  class="bg-[#4C6FFF]
@@ -72,7 +72,16 @@ export default {
             this.result
         }
         // saveData();
-}
+        },
+     back(id) {
+        if (this.form[id] != undefined) {
+            this.indexOfTest--;
+        }
+        if (this.indexOfTest >= this.allTest.length) {
+            this.result
+        }
+        // saveData();
+        }
         
     }
 }
