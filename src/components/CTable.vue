@@ -14,8 +14,8 @@
                 <td>{{item.userPhone}}</td>
                 <td><icons  class="cursor-pointer" name="dots" @click="setActive(item.id)"/>
                  <span v-if="active == item.id" class="absolute z-50 flex flex-col w-[100px] bg-[#EBF1FA] overflow-hidden border border-[#EBF1FA] cursor-pointer border-solid rounded-[8px]">
-                    <span class="text-[#525763] text-[12px] font-normal p-2 transition-all duration-300 hover:bg-[#8492a68e]" @click="getId(item.id)" >edit</span>
-                     <span class="text-[#525763] text-[12px] font-normal p-2 transition-all duration-300 hover:bg-[#8492a68e]"  @click="deleted(item.id)">delete</span>
+                    <span class="text-[#525763] text-[12px] font-normal p-2 transition-all duration-300 hover:bg-[#8492a68e]" @click="$emit('edit', item.id)"  >edit</span>
+                     <span class="text-[#525763] text-[12px] font-normal p-2 transition-all duration-300 hover:bg-[#8492a68e]" @click="$emit('delete', item.id)" >delete</span>
                 </span>
                 </td>
             </tr>
@@ -40,14 +40,6 @@ export default {
   
 
   methods: {
-    getId(id) {
-      this.$router.push(`students?id=${id}`)
-      this.$emit('edit')
-    },
-  deleted(id) {
-    this.$router.push(`students?id=${id}`)
-    this.$emit('delete')
-  },
     setActive(id) {
     if(this.active) {
       this.active = ""

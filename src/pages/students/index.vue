@@ -89,6 +89,7 @@ export default {
         single: undefined,
     dialogVisible: false,
     students: [],
+    currentStudent: undefined,
      form: {
       userName: '',
       userPhone: '',
@@ -139,13 +140,10 @@ methods: {
 },
 
 
-   deleteStudent() {
-     const a = this.getStudents.findIndex((item) => item.id == this.$route.query.id);
-     console.log(a.id,'dsadada')
-      let getSt = this.getStudents.splice(a.id, 1);
-     console.log(getSt)
-    window.sessionStorage.setItem("student", JSON.stringify(getSt));
-    this.students = this.getStudents
+   deleteStudent(id) {
+    const index = this.students.findIndex((item) => item.id == id);
+    this.students.splice(index, 1);
+    window.sessionStorage.setItem("student", JSON.stringify(this.students));
   },
 
 editStudent() {
