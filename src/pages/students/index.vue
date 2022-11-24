@@ -86,7 +86,7 @@ export default {
 
  data() {
     return {
-        single: undefined,
+    single: undefined,
     dialogVisible: false,
     students: [],
     currentStudentId: undefined,
@@ -113,11 +113,6 @@ export default {
 	}
 },
 
-watch: {
-   "this.$route.query.id"(value) {
-    console.log(value)
-    }
-},
 
 mounted() {
     this.students = this.getStudents()

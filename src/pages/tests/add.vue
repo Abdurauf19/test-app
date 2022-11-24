@@ -6,7 +6,7 @@
             <label class="text-[14px] text-[#425466] font-medium ">
                Question
             <el-input
-                v-model="form.title"
+                v-model="form.question"
                :class="{'error-prefix':v$.form.question.$error}"
                 class="mt-2" 
                 placeholder="write question"
@@ -37,10 +37,9 @@
             </el-input>
             </label>
 
-        <button v-if="true" class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px] mt-3" type="button" @click="AddTest">Add test</button>
-        <button v-if="false" class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px] mt-3" type="button" @click="editTest">Edit test</button>
-            <pre>{{getSingleTest}}</pre>
-
+        <button v-if="!singleTest" class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px] mt-3" type="button" @click="AddTest">Add test</button>
+        <button v-if="singleTest" class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px] mt-3" type="button" @click="editTest">Edit test</button>
+          
         </div>
         </div>
     </div>
@@ -55,6 +54,8 @@ export default {
   },
     data() {
         return {
+            tests: [],
+            singleTest: [],
             form: {
                question: "",
                 settings: "radio",
@@ -68,7 +69,7 @@ export default {
 	return {
         form: {
             question: {required},
-            // correct: {required}
+            correct: {required}
         }
 	}
 },
@@ -76,16 +77,15 @@ export default {
 
   
  computed: {
-    getTest() {
-        return JSON.parse(window.sessionStorage.getItem("test")) || undefined;
-    },
-    getSingleTest() {
-        return this.findItemById( this.getTest, this.$route.params.id )
-    }
+    
    },
 
    mounted() {
-    this.form.question = this.getSingleTest?.title
+    this.tests = this.getTest();
+    this.singleTest = this.getSingleTest()
+    if(this.singleTest){
+         this.updateTest();
+    }
  },
 
     methods: {
@@ -95,13 +95,34 @@ export default {
         }
     },
 
+    updateTest() {
+        this.form.question = this.singleTest?.question
+       this.form.answers = this.singleTest?.answers
+       this.form.id = this.singleTest?.id,
+       this.form.correct = this.singleTest?.correct
+    },
+     getTest() {
+        return JSON.parse(window.sessionStorage.getItem("test")) || undefined;
+    },
+    getSingleTest() {
+        return this.findItemById( this.getTest(), this.$route.params.id )
+    },
+
+     clearForm() {
+      for(let i in this.form) {
+        this.form[i] = '';
+        if(i == 'id') {
+          this.form[i] =  Math.floor(Math.random() * 100000)
+        }
+      }
+    }, 
      findItemById(arr,id) {
             return arr?.find((el) => el.id === +id)
         },
 
      async AddTest () {
             this.v$.$validate()
-            if(this.v$.$error) {
+            if(!this.v$.$error) {
             for (const index in this.form.answers) {
             if (!this.form.answers[index]) {
                 this.form.answers.splice(index, 1);
@@ -118,9 +139,28 @@ export default {
             allTest.push(this.form);
             await window.sessionStorage.setItem("test", JSON.stringify(allTest));
             this.$router.push('/')
+             this.clearForm();
         }
      },
 
+    editTest() {
+         this.v$.$validate()
+          if(!this.v$.$error) {
+            for (const i in this.form.answers) {
+            if (!this.form.answers[i]) {
+                this.form.answers.splice(i, 1);
+            }
+            }
+            const index = this.tests.findIndex((item) => item.id == this.form.id);
+            this.tests[index] = this.form;
+            window.sessionStorage.setItem("test", JSON.stringify(this.tests));
+            this.tests = this.getTest();
+            // this.clearForm();
+            this.$router.push('/');
+        }
+    },
+
+    
 }
 
 
