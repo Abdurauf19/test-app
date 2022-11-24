@@ -1,7 +1,7 @@
 <template>
     <div class="container mt-10">
       <div>
-        <CTable v-if="getStudents && getStudents.length "  :data="getStudents"  @edit="editStudent" @delete="deleteStudent"  />
+        <CTable v-if="getStudents && getStudents.length "  :data="getStudents" @add="dialogVisible = true"  @edit="editStudent" @delete="deleteStudent"  />
        <div v-else class="flex items-center justify-center h-screen " >
         <CNodata text="add students" @add="dialogVisible = true" />
        </div>
@@ -133,13 +133,11 @@ methods: {
 },
 
    deleteStudent() {
-     let a =  this.findItemById( this.getStudents, this.$route.query.id )
+     const a = this.getStudents.findIndex((item) => item.id == this.$route.query.id);
      console.log(a.id,'dsadada')
-   setTimeout(() => {
       let getSt = this.getStudents.splice(a.id, 1);
      console.log(getSt)
     window.sessionStorage.setItem("student", JSON.stringify(getSt));
-   }, 1000)
   },
 
 editStudent() {
