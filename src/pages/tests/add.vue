@@ -74,12 +74,6 @@ export default {
 	}
 },
 
-
-  
- computed: {
-    
-   },
-
    mounted() {
     this.tests = this.getTest();
     this.singleTest = this.getSingleTest()
@@ -89,11 +83,11 @@ export default {
  },
 
     methods: {
- handleFocus(index) {
-        if (index == this.form.answers.length - 1 && this.form.answers.length < 3) {
-            this.form.answers.push("");
-        }
-    },
+    handleFocus(index) {
+            if (index == this.form.answers.length - 1 && this.form.answers.length < 3) {
+                this.form.answers.push("");
+            }
+        },
 
     updateTest() {
         this.form.question = this.singleTest?.question
