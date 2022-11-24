@@ -37,8 +37,8 @@
             </el-input>
             </label>
 
-        <button v-if="false" class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px] mt-3" type="button" @click="AddTest">Add test</button>
-        <button v-if="true" class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px] mt-3" type="button" @click="editTest">Edit test</button>
+        <button v-if="true" class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px] mt-3" type="button" @click="AddTest">Add test</button>
+        <button v-if="false" class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px] mt-3" type="button" @click="editTest">Edit test</button>
             <pre>{{getSingleTest}}</pre>
 
         </div>
@@ -86,7 +86,6 @@ export default {
 
    mounted() {
     this.form.question = this.getSingleTest?.title
-    console.log(this.$route.params.id)
  },
 
     methods: {
@@ -102,7 +101,6 @@ export default {
 
      async AddTest () {
             this.v$.$validate()
-            console.log(this.v$.$error)
             if(this.v$.$error) {
             for (const index in this.form.answers) {
             if (!this.form.answers[index]) {

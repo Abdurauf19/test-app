@@ -1,9 +1,9 @@
 <template>
     <div class="container mt-10">
       <div>
-        <CTable v-if="students && students.length "  :data="students" @add="dialogVisible = true"  @edit="fillStudents" @delete="deleteStudent"  />
+        <CTable v-if="students && students.length "  :data="students" @add="openModal"  @edit="fillStudents" @delete="deleteStudent"  />
        <div v-else class="flex items-center justify-center h-screen " >
-        <CNodata text="add students" @add="dialogVisible = true" />
+        <CNodata text="add students" @add="openModal" />
        </div>
         
        <el-dialog
@@ -124,6 +124,11 @@ mounted() {
  },
 
 methods: {
+  openModal() {
+    this.dialogVisible = true;
+    this.clearForm()
+  },
+
    getStudents() {
         return JSON.parse(window.sessionStorage.getItem("student")) || undefined;
     },
