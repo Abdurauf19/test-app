@@ -11,7 +11,6 @@
                 <td>{{index+1}}</td>
                 <td>{{item.userName}}</td>
                 <td>{{item.userPhone}}</td>
-                {{item.id}}
                 <td><icons  class="cursor-pointer" name="dots" @click="setActive(item.id)"/>
                  <span v-if="active == item.id" class="absolute z-50 flex flex-col w-[100px] bg-[#EBF1FA] overflow-hidden border border-[#EBF1FA] cursor-pointer border-solid rounded-[8px]">
                     <span class="text-[#525763] text-[12px] font-normal p-2 transition-all duration-300 hover:bg-[#8492a68e]" @click="getId(item.id)" >edit</span>

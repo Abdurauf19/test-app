@@ -1,15 +1,14 @@
 <template>
     <div class="container mt-10">
       <div>
-        <CTable v-if="getStudents"  :data="getStudents"  @edit="editStudent" @delete="''"  />
+        <CTable v-if="getStudents && getStudents.length "  :data="getStudents"  @edit="editStudent" @delete="deleteStudent"  />
        <div v-else class="flex items-center justify-center h-screen " >
         <CNodata text="add students" @add="dialogVisible = true" />
        </div>
-        <pre> {{getStudents}}ddd</pre>
         
        <el-dialog
     v-model="dialogVisible"
-    title="Add Student"
+    :title="single ?'Edit student' : 'Add Student'"
     width="40%"
     :before-close="handleClose"
   >
@@ -63,7 +62,8 @@
 		 placeholder="Enter birth date "
 		  />
 	 </label>
-   <button  class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-3 rounded-[8px]" type="button" @click="createStudent">Add</button>
+   <button v-if="single"  class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-3 rounded-[8px]" type="button" @click="editStudent">Edit</button>
+   <button v-if="!single"  class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-3 rounded-[8px]" type="button" @click="createStudent">Add</button>
    </div>
    
   </el-dialog>
@@ -86,7 +86,7 @@ export default {
 
  data() {
     return {
-    singleId:undefined,
+        single: undefined,
     dialogVisible: false,
      form: {
       userName: '',
@@ -102,8 +102,7 @@ export default {
 computed: {
     getStudents() {
         return JSON.parse(window.sessionStorage.getItem("student")) || undefined;
-    }
-   
+    },
 },
 
   validations() {
@@ -118,12 +117,11 @@ computed: {
 	}
 },
 
-// watch: {
-//     'singleId'(newValue,oldValue) {
-//     //  this.singleId = newValue
-//      console.log(newValue,oldValue)
-//     }
-// },
+watch: {
+   "this.$route.query.id"(value) {
+    console.log(value)
+    }
+},
 
 mounted() {
 this.getStudents
@@ -133,11 +131,32 @@ methods: {
  findItemById(arr,id) {
     return arr.find((el) => el.id === +id)
 },
+
+   deleteStudent() {
+     let a =  this.findItemById( this.getStudents, this.$route.query.id )
+     console.log(a.id,'dsadada')
+   setTimeout(() => {
+      let getSt = this.getStudents.splice(a.id, 1);
+     console.log(getSt)
+    window.sessionStorage.setItem("student", JSON.stringify(getSt));
+   }, 1000)
+  },
+
 editStudent() {
      this.dialogVisible = true
     let a =  this.findItemById( this.getStudents, this.$route.query.id )
-    console.log(a)
-    //    console.log( $findItemById(this.$route.query.id, this.getStudents))
+    this.single = a
+    console.log(a.userName)
+    this.form.userName = a.userName
+    this.form.userPhone = a.userPhone
+    this.form.userPassport = a.userPassport
+    this.form.userPINFL = a.userPINFL
+    this.form.userBirthdate = a.userBirthdate
+    const index = this.getStudents.findIndex((item) => item.id == this.$route.query.id);
+    console.log(index)
+    this.getStudents[index] = this.form;
+    window.sessionStorage.setItem("student", JSON.stringify(this.getStudents));
+     this.dialogVisible = false
 },
  async createStudent() {
      this.v$.$validate()
