@@ -9,6 +9,7 @@ declare module '@vue/runtime-core' {
     CTable: typeof import('./../components/CTable.vue')['default']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElInput: typeof import('element-plus/es')['ElInput']
+    ElRadio: typeof import('element-plus/es')['ElRadio']
     Icon: typeof import('./../components/icon.vue')['default']
     NoData: typeof import('./../components/noData.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

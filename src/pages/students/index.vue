@@ -1,7 +1,7 @@
 <template>
     <div class="container mt-10">
       <div>
-        <CTable v-if="students && students.length "  :data="students" @add="dialogVisible = true"  @edit="editStudent" @delete="deleteStudent"  />
+        <CTable v-if="students && students.length "  :data="students" @add="dialogVisible = true"  @edit="fillStudents" @delete="deleteStudent"  />
        <div v-else class="flex items-center justify-center h-screen " >
         <CNodata text="add students" @add="dialogVisible = true" />
        </div>
@@ -89,7 +89,7 @@ export default {
         single: undefined,
     dialogVisible: false,
     students: [],
-    currentStudent: undefined,
+    currentStudentId: undefined,
      form: {
       userName: '',
       userPhone: '',
@@ -146,22 +146,23 @@ methods: {
     window.sessionStorage.setItem("student", JSON.stringify(this.students));
   },
 
-editStudent() {
-     this.dialogVisible = true
-    let a =  this.findItemById( this.getStudents, this.$route.query.id )
-    this.single = a
-    console.log(a.userName)
-    this.form.userName = a.userName
-    this.form.userPhone = a.userPhone
-    this.form.userPassport = a.userPassport
-    this.form.userPINFL = a.userPINFL
-    this.form.userBirthdate = a.userBirthdate
-    const index = this.getStudents.findIndex((item) => item.id == this.$route.query.id);
-    console.log(index)
-    this.getStudents[index] = this.form;
-    window.sessionStorage.setItem("student", JSON.stringify(this.getStudents));
-     this.dialogVisible = false
-      this.getStudents
+  fillStudents(id) {
+    this.dialogVisible = true
+    this.currentStudentId = id
+    let obj =  this.findItemById(this.students , id )
+    this.single = obj
+    this.form.userName =  obj.userName
+    this.form.userPhone =  obj.userPhone
+    this.form.userPassport =  obj.userPassport
+    this.form.userPINFL =  obj.userPINFL
+    this.form.userBirthdate =  obj.userBirthdate
+  },
+
+  editStudent() {
+    const index = this.students.findIndex((item) => item.id == this.currentStudentId);
+    this.students[index] = this.form;
+    window.sessionStorage.setItem("student", JSON.stringify(this.students));
+    this.dialogVisible = false
 },
  async createStudent() {
      this.v$.$validate()
