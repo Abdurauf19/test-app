@@ -17,7 +17,7 @@
             </el-radio-group>
             </div>
             <div class="flex  gap-3 justify-end">
-                <button v-if="indexOfTest > 1" class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px]" @click="back(singleTest?.id)">prev</button>
+                <button v-if="indexOfTest > 0" class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px]" @click="back(singleTest?.id)">prev</button>
                 <button 
                  :disabled="form[singleTest?.id] == undefined"
                  class="bg-[#4C6FFF]
@@ -30,9 +30,9 @@
             </div>
         </div>
 
-        <div v-else class="h-[200px] card w-[880px] border p-5 border-black border-solid">
+        <div v-else class="h-[200px] card w-[880px] border flex flex-col p-5 border-black border-solid">
             your score is {{ result }} / {{ allTest.length }}
-            <span v-if="result <= 0">Awfull</span>
+        <button class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] max-w-[120px] transition-all duration-300 px-5 text-white py-2 rounded-[8px] mt-5" @click="$router.push('/')">go back</button>
         </div>
     </div>
 </template>
@@ -50,7 +50,14 @@ export default {
     },
 
     mounted() {
-        this.allTest = this.getTest()
+        this.allTest = this.getTest();
+         const solved = JSON.parse(sessionStorage.getItem("solved")) || "";
+        this.indexOfTest = JSON.parse(sessionStorage.getItem("indexOfTest")) || 0;
+        this.result = JSON.parse(sessionStorage.getItem("result")) || 0;
+
+        if (solved) {
+            Object.assign(this.form, solved);
+        }
     },
 
     computed: {
@@ -69,19 +76,53 @@ export default {
             this.indexOfTest++;
         }
         if (this.indexOfTest >= this.allTest.length) {
-            this.result
+            this.result = this.getScore(this.calculateScore)
         }
-        // saveData();
+       this.saveStorage()
         },
      back(id) {
         if (this.form[id] != undefined) {
             this.indexOfTest--;
         }
         if (this.indexOfTest >= this.allTest.length) {
-            this.result
+           
         }
-        // saveData();
+        this.saveStorage();
+        },
+
+        saveStorage() {
+             sessionStorage.setItem("solved", JSON.stringify(this.form));
+            sessionStorage.setItem("indexOfTest", JSON.stringify(this.indexOfTest));
+            sessionStorage.setItem("result", JSON.stringify(this.result));
+        },
+
+         getScore(callback) {
+            let result = 0;
+            for (let i in this.form) {
+                result += callback(i);
+            }
+
+            return result;
+            },
+
+       calculateScore(id) {
+        console.log(id)
+        const found = this.allTest.find((item) => item.id === id);
+        console.log(found)
+       if (found.settings == "radio") {
+            return found.correct == this.form[id] ? 1 : 0;
+        } else {
+            let correct = 0;
+            for (let i of found.correct) {
+            if (this.form[id].includes(i)) {
+                correct++;
+            }
+            }
+            return correct == found.correct.length ? 1 : 0;
         }
+        }
+
+
         
     }
 }
