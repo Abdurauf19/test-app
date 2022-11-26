@@ -21,7 +21,7 @@
            <div class="flex justify-end mt-5"> <button class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px]" @click="$router.push('/tests/solve/')">start test</button></div>
         </div>
         <div v-else class="flex items-center justify-center h-screen " >
-        <CNodata text="add students" @add="$router.push('/tests/add')" />
+        <CNodata text="add test" @add="$router.push('/tests/add')" />
        </div>
     </div>
 </template>

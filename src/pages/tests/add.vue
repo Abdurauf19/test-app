@@ -1,4 +1,4 @@
-<template>
+    <template>
     <div class="ml-[100px] h-screen flex flex-center justify-center" >
         <div class="card w-[780px] p-10 flex flex-col gap-4">
            <div>
@@ -37,6 +37,18 @@
             </el-input>
             </label>
 
+      <div class="mt-3 flex flex-col">
+      <label>Select test format</label>
+        <el-select class="max-w-[200px]" v-model="value" filterable placeholder="Select">
+            <el-option
+            v-for="item in testType"
+            :key="item.key"
+            :label="item.label"
+            :value="item.key"
+            />
+        </el-select>
+      </div>
+
         <button v-if="!singleTest" class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px] mt-3" type="button" @click="AddTest">Add test</button>
         <button v-if="singleTest" class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px] mt-3" type="button" @click="editTest">Edit test</button>
           
@@ -62,7 +74,19 @@ export default {
                 answers: [""],
                 correct: 0,
                 id: Math.floor(Math.random() * 100000),
-            }
+            },
+            testType: [
+                {
+                    key: "radio",
+                    
+                },
+                {
+                    key: "textarea",
+                },
+                {
+                    key: "checkbox",
+                },
+            ]
         }
     },
     validations() {
