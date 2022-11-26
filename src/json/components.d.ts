@@ -7,6 +7,7 @@ declare module '@vue/runtime-core' {
     CModal: typeof import('./../components/CModal.vue')['default']
     CSideBar: typeof import('./../components/CSideBar.vue')['default']
     CTable: typeof import('./../components/CTable.vue')['default']
+    ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElOption: typeof import('element-plus/es')['ElOption']

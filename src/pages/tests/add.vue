@@ -17,7 +17,7 @@
             <div class="flex flex-col">
              <label class="text-[14px] text-[#425466] font-medium ">
                 Answer
-            <el-input
+            <el-input v-if="form.settings == 'radio' "
                  v-for="(item, index) in form.answers"
                  :key="index"
                  v-model="form.answers[index]"
@@ -35,11 +35,38 @@
                     ></el-radio>
                 </template>
             </el-input>
+
+                <el-input class="mt-3"  v-if="form.settings == 'textarea' "
+                    v-model="form.correct"
+                    :rows="2"
+                    type="textarea"
+                    placeholder="Please input"
+                />
+
+            <el-input v-if="form.settings == 'checkbox' "
+                 v-for="(item, index) in form.answers"
+                 :key="index"
+                 v-model="form.answers[index]"
+                class="mt-2" 
+                placeholder="write answers  "
+                 @focus="handleFocus(index)"
+            > 
+                <template #prefix>
+                 <el-checkbox
+                   v-model="form.correct"
+                 :label="index"
+                 :disabled="!form.answers[index].length"
+                  >
+                 <span></span
+                    >
+                    </el-checkbox>
+                </template>
+            </el-input>
             </label>
 
       <div class="mt-3 flex flex-col">
       <label>Select test format</label>
-        <el-select class="max-w-[200px]" v-model="value" filterable placeholder="Select">
+        <el-select class="max-w-[200px]" v-model="form.settings" filterable placeholder="Select">
             <el-option
             v-for="item in testType"
             :key="item.key"
@@ -51,7 +78,7 @@
 
         <button v-if="!singleTest" class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px] mt-3" type="button" @click="AddTest">Add test</button>
         <button v-if="singleTest" class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px] mt-3" type="button" @click="editTest">Edit test</button>
-          
+          {{singleTest}}
         </div>
         </div>
     </div>
@@ -98,11 +125,25 @@ export default {
 	}
 },
 
+
    mounted() {
     this.tests = this.getTest();
     this.singleTest = this.getSingleTest()
     if(this.singleTest){
          this.updateTest();
+    }
+ },
+
+ watch: {
+    'form.settings'(newSettings) {
+    if(newSettings === "radio") {
+        this.form.correct = 0;
+    }else if (newSettings === "checkbox") {
+       this.form.correct = [0];
+    }else {
+         this.form.correct = undefined;
+         this.form.answers = [""];
+    }
     }
  },
 
@@ -116,8 +157,12 @@ export default {
     updateTest() {
         this.form.question = this.singleTest?.question
        this.form.answers = this.singleTest?.answers
+       this.form.settings = this.singleTest.settings
        this.form.id = this.singleTest?.id,
        this.form.correct = this.singleTest?.correct
+       if(this.singleTest.settings === "textarea") {
+        this.form.correct = this.singleTest?.answers
+       }
     },
      getTest() {
         return JSON.parse(window.sessionStorage.getItem("test")) || undefined;
