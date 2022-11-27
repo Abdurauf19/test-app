@@ -64,7 +64,6 @@
             </label>
 
       <div class="mt-3 flex flex-col">
-      {{singleTest}}
       <label>Select test format</label>
         <el-select class="max-w-[200px]" v-model="form.settings" filterable placeholder="Select">
             <el-option
