@@ -34,13 +34,12 @@
                       ><span></span
                     ></el-radio>
                 </template>
-            </el-input>
-
+            </el-input> 
                 <el-input class="mt-3"  v-if="form.settings == 'textarea' "
                     v-model="form.correct"
                     :rows="2"
                     type="textarea"
-                    placeholder="Please input"
+                    placeholder="Write Answer"
                 />
 
             <el-input v-if="form.settings == 'checkbox' "
@@ -141,7 +140,6 @@ export default {
     }else if (newSettings === "checkbox") {
        this.form.correct = [0];
     }else {
-         this.form.correct = undefined;
          this.form.answers = [""];
     }
     }
@@ -157,12 +155,12 @@ export default {
     updateTest() {
         this.form.question = this.singleTest?.question
        this.form.answers = this.singleTest?.answers
-       this.form.settings = this.singleTest.settings
+       this.form.settings = this.singleTest?.settings
        this.form.id = this.singleTest?.id,
        this.form.correct = this.singleTest?.correct
-       if(this.singleTest.settings === "textarea") {
-        this.form.correct = this.singleTest?.answers
-       }
+    //    if(this.singleTest.settings === "textarea") {
+        // this.form.correct = this.singleTest?.correct
+    //    }
     },
      getTest() {
         return JSON.parse(window.sessionStorage.getItem("test")) || undefined;

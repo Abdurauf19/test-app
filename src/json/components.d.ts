@@ -8,7 +8,7 @@ declare module '@vue/runtime-core' {
     CSideBar: typeof import('./../components/CSideBar.vue')['default']
     CTable: typeof import('./../components/CTable.vue')['default']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
-    ElDialog: typeof import('element-plus/es')['ElDialog']
+    ElCheckboxGroup: typeof import('element-plus/es')['ElCheckboxGroup']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElOption: typeof import('element-plus/es')['ElOption']
     ElRadio: typeof import('element-plus/es')['ElRadio']

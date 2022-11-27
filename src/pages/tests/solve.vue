@@ -1,11 +1,10 @@
 <template>
     <div class="h-screen flex items-center justify-center ">
         <div class="card  w-[880px] border p-5 border-black border-solid" v-if="getTest">
-            <h2>Question   <span>{{index + 1}} / {{allTest.length}}</span></h2>
+            <h2>Question   <span>{{index + 1}} / {{allTest.length}}</span> {{this.current}}</h2>
             <div>
                 <h3 class="text-[#27272E] text-[16px] font-semibold">{{getTest.question}}</h3>
-                {{current}}
-            <el-radio-group v-model="current[getTest?.id]" class="mt-3">
+            <el-radio-group v-if="getTest.settings === 'radio'"  v-model="current[getTest?.id]" class="mt-3">
               <el-radio
                 v-for="(item, idx) in getTest?.answers"
                 :key="idx"
@@ -16,6 +15,23 @@
                 </template>
               </el-radio>
             </el-radio-group>
+
+               <el-checkbox-group v-if="getTest.settings === 'checkbox'"  v-model="current[getTest?.id]">
+              <el-checkbox
+                v-for="(item, idx) in getTest?.answers"
+                :key="idx"
+                :label="idx"
+                >{{ item }}</el-checkbox
+              >
+            </el-checkbox-group>
+    <div class="mb-2" v-if="getTest.settings === 'textarea'">
+            <el-input
+              class="mt-3 resize-none"
+               v-model="current[getTest?.id]"
+              type="textarea"
+              placeholder="Write answer"
+            />
+    </div>
             </div>
             <div class="flex  gap-3 justify-end">
                 <button 
@@ -61,7 +77,8 @@ export default {
     computed: {
         getTest() {
             return this.allTest[this.index];
-        }
+        },
+       
     },
     methods: {
         submit(id) {
@@ -91,10 +108,15 @@ export default {
 
             return res;
         },
+
+
+
+
+
         pushToIndex() {
-  sessionStorage.removeItem("solved");
-  sessionStorage.removeItem("result");
-  sessionStorage.removeItem("testIndex");
+            sessionStorage.removeItem("solved");
+            sessionStorage.removeItem("result");
+            sessionStorage.removeItem("testIndex");
             this.$router.push('/')
         }
     }
