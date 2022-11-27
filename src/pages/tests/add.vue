@@ -64,6 +64,7 @@
             </label>
 
       <div class="mt-3 flex flex-col">
+      {{singleTest}}
       <label>Select test format</label>
         <el-select class="max-w-[200px]" v-model="form.settings" filterable placeholder="Select">
             <el-option
@@ -77,7 +78,6 @@
 
         <button v-if="!singleTest" class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px] mt-3" type="button" @click="AddTest">Add test</button>
         <button v-if="singleTest" class="bg-[#4C6FFF] hover:bg-[#4c70ffbd] transition-all duration-300 px-5 text-white py-2 rounded-[8px] mt-3" type="button" @click="editTest">Edit test</button>
-          {{singleTest}}
         </div>
         </div>
     </div>
@@ -138,7 +138,7 @@ export default {
     if(newSettings === "radio") {
         this.form.correct = 0;
     }else if (newSettings === "checkbox") {
-       this.form.correct = [0];
+     this.singleTest ? '' : this.form.correct = [0]
     }else {
          this.form.answers = [""];
     }
@@ -158,9 +158,6 @@ export default {
        this.form.settings = this.singleTest?.settings
        this.form.id = this.singleTest?.id,
        this.form.correct = this.singleTest?.correct
-    //    if(this.singleTest.settings === "textarea") {
-        // this.form.correct = this.singleTest?.correct
-    //    }
     },
      getTest() {
         return JSON.parse(window.sessionStorage.getItem("test")) || undefined;

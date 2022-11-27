@@ -1,7 +1,7 @@
 <template>
     <div class="h-screen flex items-center justify-center ">
         <div class="card  w-[880px] border p-5 border-black border-solid" v-if="getTest">
-            <h2>Question   <span>{{index + 1}} / {{allTest.length}}</span> {{this.current}}</h2>
+            <h2>Question   <span>{{index + 1}} / {{allTest.length}}</span></h2>
             <div>
                 <h3 class="text-[#27272E] text-[16px] font-semibold">{{getTest.question}}</h3>
             <el-radio-group v-if="getTest.settings === 'radio'"  v-model="current[getTest?.id]" class="mt-3">
@@ -104,33 +104,22 @@ export default {
             for (let i in this.current) {
                 const found = this.allTest.find((item) => item.id === +i);
               if(found.settings == 'textarea') {
-               res++
-              }else {
+                if(found.correct == this.current[i]) {
+                    res++
+                }
+              }else if(found.settings == 'radio') {
                 res += found.correct == this.current[i] ? 1 : 0
+              }else {
+                for(const item of found.correct) {
+                    if(this.current[i].includes(item)) {
+                        res++
+                    }
+                }
               }
-                
             }
 
             return res;
         },
-
-
-    //      calculateScore(id: string) {
-//   const found = tests.value.find((item) => item.id === id);
-//   if (found.settings == "textarea") {
-//     return 1;
-//   } else if (found.settings == "radio") {
-//     return found.correct == form[id] ? 1 : 0;
-//   } else {
-//     let correct = 0;
-//     for (let i of found.correct) {
-//       if (form[id].includes(i)) {
-//         correct++;
-//       }
-//     }
-//     return correct == found.correct.length ? 1 : 0;
-//   }
-// }
 
 
         pushToIndex() {
