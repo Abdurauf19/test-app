@@ -103,14 +103,34 @@ export default {
             let res = 0;
             for (let i in this.current) {
                 const found = this.allTest.find((item) => item.id === +i);
+              if(found.settings == 'textarea') {
+               res++
+              }else {
                 res += found.correct == this.current[i] ? 1 : 0
+              }
+                
             }
 
             return res;
         },
 
 
-
+    //      calculateScore(id: string) {
+//   const found = tests.value.find((item) => item.id === id);
+//   if (found.settings == "textarea") {
+//     return 1;
+//   } else if (found.settings == "radio") {
+//     return found.correct == form[id] ? 1 : 0;
+//   } else {
+//     let correct = 0;
+//     for (let i of found.correct) {
+//       if (form[id].includes(i)) {
+//         correct++;
+//       }
+//     }
+//     return correct == found.correct.length ? 1 : 0;
+//   }
+// }
 
 
         pushToIndex() {

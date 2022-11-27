@@ -56,11 +56,6 @@ validations() {
 	}
 },
 
-//  mounted() {
-// 	 if (localStorage.getItem("auth")) {
-//      this.$router.push("/");
-//   }
-//  },
 methods: {
     logIn() {
 		 this.v$.$validate()

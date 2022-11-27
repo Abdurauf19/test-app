@@ -216,7 +216,6 @@ export default {
             this.tests[index] = this.form;
             window.sessionStorage.setItem("test", JSON.stringify(this.tests));
             this.tests = this.getTest();
-            // this.clearForm();
             this.$router.push('/');
         }
     },
